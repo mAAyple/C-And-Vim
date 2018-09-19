@@ -1,0 +1,35 @@
+Commands:
+
+gcc -Wall -o program program.c
+
+gcc -Wall -o programmath programmath.c -lm
+
+git init
+
+git add --all
+
+git commit -m "message"
+
+git push -u origin master
+
+:NERDTree
+:PlugInstall
+:PlugUpdate
+
+
+Plugins:
+
+https://github.com/junegunn/fzf.vim
+
+https://github.com/w0rp/ale
+
+https://github.com/tpope/vim-pathogen
+
+https://github.com/junegunn/vim-plug
+
+https://github.com/scrooloose/nerdtree
+
+https://github.com/itchyny/lightline.vim
+
+
+

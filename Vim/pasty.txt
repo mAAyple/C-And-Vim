@@ -1,0 +1,5 @@
+gcc -Wall -o prelab4 prelab4.c
+./prelab4
+gcc -Wall -o prelab4b prelab4b.c
+./prelab4b
+
