@@ -20,4 +20,4 @@ int main() {
     printf("%f \n", anga);
     printf("And Your angel B: \n");
     printf("%f \n", angb);
-}	
+}

@@ -1,17 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 int main(){
-	char home[20] = { };
-	char away[20] = { };
+	char home[20];
+	char away[20];
 	char type;
 	int count;
 	int inning;
 	int i;
 	int j;
 	char score[3][10] = {0};
-	score[1][10] = 'R';
+	score[0][9] = 'R';
 	srand(time(0));
+	printf("---------------------------------------------------------------------------\n");
+	printf("                               ISU BASEBALL                                \n");
+	printf("---------------------------------------------------------------------------\n");
 	printf("Enter a home team of your choosing: \n");
 	scanf("%s", home);
 	printf("Enter a away team of your choosing: \n");
@@ -22,70 +26,80 @@ int main(){
 		while(count != '0'){
 			printf("What inning would you like to edit? \n");
 			scanf("%d", &inning);
-			printf("What is the score for ");
-			printf("%s ", home);
-			printf("for inning  ");
-			printf("%d", inning);
-			printf(" ? \n");
+			printf("What is the score for %s for inning %d ? \n", home, inning);
 			scanf("%d", &i);
-			score[2][inning] = i;
-			printf("Inning: ");
+			score[1][inning] = i;
+			printf("Inning:	");
 			for(count = 1; count < 10 ; count++){
-				score[1][count] = count;
-				printf(" %c ", score[1][count]);
+				score[0][count] = count;
+				printf(" %d ", score[0][count]);
+			}
+
+			printf(" %d ", score[0][9]);
+
+			printf("\n");
+			printf("%s	", home);
+			for(count = 1; count < 10 ; count++){
+				printf(" %d ", score[1][count]);
 			}
 			printf("\n");
-			printf("%s", home);
+			printf("%s 	", away);
 			for(count = 1; count < 10 ; count++){
-				printf("%c ", score[2][count]);
+				printf(" %d ", score[2][count]);
 			}
 			printf("\n");
-			printf("%s", away);
-			for(count = 1; count < 10 ; count++){
-				printf(" %c ", score[3][count]);
-			}
-			printf("\n");
-			printf("What is the score for ");
-			printf("%s ", away);
-			printf("for inning  ");
-			printf("%d", count);
-			printf(" ? \n");
+			printf("What is the score for %s for inning %d ? \n", away, inning);
 			scanf("%d", &j);
-			score[3][count] = j;
+			score[2][inning] = j;
+			printf("Inning:	");
 			for(count = 1; count < 10 ; count++){
-				printf(" %c ", score[1][count]);
+				score[0][count] = count;
+				printf(" %d ", score[0][count]);
+			}
+			printf("%c", score[0][9]);
+			printf("\n");
+			printf("%s	", home);
+			for(count = 1; count < 10 ; count++){
+				printf(" %d ", score[1][count]);
 			}
 			printf("\n");
-			printf("%s", home);
+			printf("%s 	", away);
 			for(count = 1; count < 10 ; count++){
-				printf(" %c ", score[2][count]);
+				printf(" %d ", score[2][count]);
 			}
 			printf("\n");
-			printf("%s", away);
-			for(count = 1; count < 10 ; count++){
-				printf(" %c ", score[3][count]);
-			}
-			printf("Enter 0 to save and quit, or enter c to continue");
+			printf("Enter 0 to save and quit, or enter 1 to continue");
 			scanf("%d", &count);
+			if((count) == '0') {
+				printf("The final score:");
+				return count == '0';
+			}
 		}
 	}
 	else if(type == 'a' || type == 'A'){
-		for(count = 1; count <= 9; count++) {
-			score[2][count] = rand() % 1000;
-			score[3][count] = rand() % 1000;
-			score[1][count] = count;
+		for(count = 0; count <= 9; count++) {
+			score[1][count] = fabs(rand() % 10);
+			score[2][count] = fabs(rand() % 10);
+			score[0][count] = count;
 		}
-		for(count = 1; count < 10 ; count++){
-			printf(" %c ", score[1][count]);
-		}
+			printf("Inning:	");
+			for(count = 1; count < 10 ; count++){
+				score[0][count] = count;
+				printf(" %d ", score[0][count]);
+			}
+			printf("%c", score[0][9]);
+			printf("\n");
+			printf("%s	", home);
+			for(count = 1; count < 10 ; count++){
+				printf(" %d ", score[1][count]);
+			}
+			printf("\n");
+			printf("%s 	", away);
+			for(count = 1; count < 10 ; count++){
+				printf(" %d ", score[2][count]);
+			}
+			printf("\n");
 
-		for(count = 1; count < 10 ; count++){
-			printf(" %c ", score[2][count]);
-		}
-
-		for(count = 1; count < 10 ; count++){
-			printf(" %c ", score[3][count]);
-		}
 	}
 }
 
