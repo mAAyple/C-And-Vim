@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#define IMG_ROWS 900
-#define IMG_COLS 900
+#define IMG_ROWS 700
+#define IMG_COLS 700
 
-char input_file_name[] = "cy.bmp";
-char output_file_name[] = "cy2.bmp";
+char input_file_name[] = "cookie-monster-cat.bmp";
+char output_file_name[] = "cookie-monster-cat2.bmp";
 
 uint16_t bpp;
 uint32_t pixel_arr_loc;
@@ -123,108 +123,52 @@ int write_image(FILE *out, FILE *in) {
 	return 0;
 }
 
+struct arith {
+	int r_add,g_add,b_add;
+	int r_final,g_final,b_final;
+	double r_mult,g_mult,b_mult;
+	int add_input;
+};
+
+
 int main() {
-	int r_max,r_min;
 	FILE *in = fopen(input_file_name, "rb");
 	FILE *out = fopen(output_file_name, "wb");
 	load_image(in);
 
 	/*------------Start of filter code-------------*/
-	void grey(int, int);
-	printf("What should the max grey color be? \n\n");
-	printf("Enter a number between 1 and 100:\n\n");
-	scanf("%d", &r_max);
-	printf("What should the min grey color be? \n\n");
-	printf("Enter a number between 1 and 100:\n\n");
-	scanf("%d", &r_min);
-	grey(r_max, r_min);
+	struct arith art;
+	printf("Enter your filter R level for add: (1-255)\n\n");
+	scanf("%d", &art.r_add);
+
+	printf("Enter your filter G level for add: (1-255)\n\n");
+	scanf("%d", &art.g_add);
+
+	printf("Enter your filter B level for add: (1-255)\n\n");
+	scanf("%d", &art.b_add);
+
+	printf("Enter your filter R level for mult: (1-255)\n\n");
+	scanf("%lf", &art.r_mult);
+
+	printf("Enter your filter G level for mult: (1-255)\n\n");
+	scanf("%lf", &art.g_mult);
+
+	printf("Enter your filter B level for mult: (1-255)\n\n");
+	scanf("%lf", &art.b_mult);
+
+	int i,j;
+	for(i = 0; i < 700; i++){
+		for(j = 0; j <700; j++){
+			r_out[i][j] = (r_in[i][j] * art.r_mult) + (r_in[i][j] * art.r_add);
+
+			g_out[i][j] = (g_in[i][j] * art.g_mult) + (g_in[i][j] * art.g_add);
+
+			b_out[i][j] = (b_in[i][j] * art.b_mult) + (b_in[i][j] * art.b_add);
+		}
+	}
 	/*------------End of filter code-------------*/
 
 	write_image(out, in);
 	fclose(in);
 	fclose(out);
 }
-
-
-void grey(int max,int min){
-	int i,j,tmp;
-	char inp;
-	printf("Enter either (x)max or (n)min for your grayscale: \n\n");
-	scanf("%s", &inp);
-	if(inp == 'x')
-	{
-	for(i = 0; i < 900; i++){
-
-		for(j = 0; j < 900; j++) {
-			r_out[i][j] = (r_in[i][j] / (32) * max);
-			g_out[i][j] = (g_in[i][j] / (32) * max);
-			b_out[i][j] = (b_in[i][j] / (32) * max);
-			if(r_out[i][j] <= g_out[i][j]){
-				tmp = g_out[i][j];
-				r_out[i][j] = tmp;
-			}
-
-			if(b_out[i][j] <= g_out[i][j]){
-				tmp = g_out[i][j];
-				b_out[i][j] = tmp;
-			}
-
-			if(g_out[i][j] <= r_out[i][j]){
-				tmp = r_out[i][j];
-				g_out[i][j] = tmp;
-			}
-
-			if(b_out[i][j] <= r_out[i][j]){
-				tmp = r_out[i][j];
-				b_out[i][j] = tmp;
-			}
-
-			if(r_out[i][j] <= b_out[i][j]){
-				tmp = b_out[i][j];
-				r_out[i][j] = tmp;
-			}
-
-			if(g_out[i][j] <= b_out[i][j]){
-				tmp = b_out[i][j];
-				g_out[i][j] = tmp;
-			}
-		}
-	}
-	}
-	else if(inp == 'n')
-	{
-	for(i = 0; i < 900; i++){
-		for(j = 0; j < 900; j++) {
-			r_out[i][j] = (r_in[i][j] / (32) * min);
-			g_out[i][j] = (g_in[i][j] / (32) * min);
-			b_out[i][j] = (b_in[i][j] / (32) * min);
-			if(r_out[i][j] <= g_out[i][j]){
-				tmp = g_out[i][j];
-				r_out[i][j] = tmp;
-			}
-			if(b_out[i][j] <= g_out[i][j]){
-				tmp = g_out[i][j];
-				b_out[i][j] = tmp;
-			}
-			if(g_out[i][j] <= r_out[i][j]){
-				tmp = r_out[i][j];
-				g_out[i][j] = tmp;
-			}
-			if(b_out[i][j] <= r_out[i][j]){
-				tmp = r_out[i][j];
-				b_out[i][j] = tmp;
-			}
-			if(r_out[i][j] <= b_out[i][j]){
-				tmp = b_out[i][j];
-				r_out[i][j] = tmp;
-			}
-			if(g_out[i][j] <= b_out[i][j]){
-				tmp = b_out[i][j];
-				g_out[i][j] = tmp;
-			}
-		}
-	}
-
-	}
-}
-
